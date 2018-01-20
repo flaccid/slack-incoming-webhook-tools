@@ -23,7 +23,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "siwp"
 	app.Version = VERSION
-	app.Usage = "siwp"
+	app.Usage = "simple reverse proxy for a slack webhook url"
 	app.Action = start
 	app.Before = beforeApp
 	app.Flags = []cli.Flag{

@@ -50,7 +50,10 @@ Note: currently only `siwp` is built and published on Docker Hub.
 
 ## Building
 
-TODO
+```
+go build -o bin/siwc cmd/siwc/siwc.go
+go build -o bin/siwp cmd/siwp/siwp.go
+```
 
 ## Upstream Documentation
 

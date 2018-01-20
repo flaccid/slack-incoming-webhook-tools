@@ -1,5 +1,14 @@
 # slack-incoming-webhook-tools
 
+## Installation
+
+```
+git clone https://github.com/flaccid/slack-incoming-webhook-tools.git \
+  "$GOPATH/src/github.com/flaccid/slack-incoming-webhook-tools"
+cd "$GOPATH/src/github.com/flaccid/slack-incoming-webhook-tools"
+go get ./...
+```
+
 ## Usage
 
 ### siwp

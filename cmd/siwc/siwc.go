@@ -73,10 +73,7 @@ func customFuncMap() template.FuncMap {
 }
 
 func parse(s string) (*template.Template, error) {
-	p, err := template.New("").Funcs(sprig.TxtFuncMap()).Funcs(customFuncMap()).Parse(s)
-	log.Debug("P", p)
-
-	return p, err
+	return template.New("").Funcs(sprig.TxtFuncMap()).Funcs(customFuncMap()).Parse(s)
 }
 
 func readEnv() (env map[string]string) {

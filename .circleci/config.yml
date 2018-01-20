@@ -1,0 +1,12 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: /go/src/github.com/flaccid/slack-incoming-webhook-tools
+    docker:
+      - image: circleci/golang:1.9
+    steps:
+      - checkout
+      - run: go get ./...
+      - run: go build -o bin/siwc cmd/siwc/siwc.go
+      - run: go build -o bin/siwp cmd/siwp/siwp.go

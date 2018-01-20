@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/flaccid/slack-incoming-webhook-proxy/util"
+	"github.com/flaccid/slack-incoming-webhook-tools/util"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

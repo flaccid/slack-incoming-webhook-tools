@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/flaccid/slack-incoming-webhook-proxy/proxy"
+	"github.com/flaccid/slack-incoming-webhook-tools/proxy"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

@@ -80,13 +80,13 @@ func start(c *cli.Context) error {
 		// load template
 		t, err := util.Parse(c.String("template"))
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 
 		// render the template
 		var tpl bytes.Buffer
 		if err := t.Execute(&tpl, env); err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 		log.Debug("rendered: ", tpl.String())
 
@@ -107,14 +107,14 @@ func start(c *cli.Context) error {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	log.WithFields(log.Fields{

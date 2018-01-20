@@ -5,10 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"strings"
-	"text/template"
 
-	"github.com/Masterminds/sprig"
+	"github.com/flaccid/slack-incoming-webhook-proxy/util"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -55,36 +53,6 @@ func main() {
 	app.Run(os.Args)
 }
 
-// returns key, value for all environment variables starting with prefix
-func environment(prefix string) map[string]string {
-	env := make(map[string]string)
-	for _, setting := range os.Environ() {
-		pair := strings.SplitN(setting, "=", 2)
-		if strings.HasPrefix(pair[0], prefix) {
-			env[pair[0]] = pair[1]
-		}
-	}
-	return env
-}
-
-func customFuncMap() template.FuncMap {
-	var functionMap = map[string]interface{}{"environment": environment}
-	return template.FuncMap(functionMap)
-}
-
-func parse(s string) (*template.Template, error) {
-	return template.New("").Funcs(sprig.TxtFuncMap()).Funcs(customFuncMap()).Parse(s)
-}
-
-func readEnv() (env map[string]string) {
-	env = make(map[string]string)
-	for _, setting := range os.Environ() {
-		pair := strings.SplitN(setting, "=", 2)
-		env[pair[0]] = pair[1]
-	}
-	return
-}
-
 func start(c *cli.Context) error {
 	log.Debug("initialising")
 
@@ -106,11 +74,11 @@ func start(c *cli.Context) error {
 		payload = []byte(c.String("payload"))
 	} else {
 		// get environment variables to supply to the template
-		env := readEnv()
+		env := util.ReadEnv()
 		log.Debug("env: ", env)
 
 		// load template
-		t, err := parse(c.String("template"))
+		t, err := util.Parse(c.String("template"))
 		if err != nil {
 			panic(err)
 		}

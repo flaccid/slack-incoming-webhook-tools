@@ -3,12 +3,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.9
+      - image: circleci/golang:1.8
     working_directory: /go/src/github.com/flaccid/slack-incoming-webhook-tools
     steps:
       - checkout
-      # try to ignroe the upstream issue
-      # https://github.com/Masterminds/sprig/issues/75
-      - run: go get ./... || true
+      - run: go get ./...
       - run: go build -o bin/siwc cmd/siwc/siwc.go
       - run: go build -o bin/siwp cmd/siwp/siwp.go

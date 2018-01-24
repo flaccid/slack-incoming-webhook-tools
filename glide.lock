@@ -1,0 +1,31 @@
+hash: 573bd0defe83aeea19902c2461d63e64bdbe2321ba3eca5083b5a586145bb391
+updated: 2018-01-25T09:33:07.930615+11:00
+imports:
+- name: github.com/aokoli/goutils
+  version: 3391d3790d23d03408670993e957e8f408993c34
+- name: github.com/huandu/xstrings
+  version: 37469d0c81a7910b49d64a0d308ded4823e90937
+- name: github.com/imdario/mergo
+  version: 7fe0c75c13abdee74b09fcacef5ea1c6bba6a874
+- name: github.com/Masterminds/semver
+  version: 59c29afe1a994eacb71c833025ca7acf874bb1da
+- name: github.com/Masterminds/sprig
+  version: b217b9c388de2cacde4354c536e520c52c055563
+- name: github.com/satori/go.uuid
+  version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
+- name: github.com/sirupsen/logrus
+  version: d682213848ed68c0a260ca37d6dd5ace8423f5ba
+- name: github.com/urfave/cli
+  version: 75104e932ac2ddb944a6ea19d9f9f26316ff1145
+- name: golang.org/x/crypto
+  version: 3d37316aaa6bd9929127ac9a527abf408178ea7b
+  subpackages:
+  - pbkdf2
+  - scrypt
+  - ssh/terminal
+- name: golang.org/x/sys
+  version: af9a21289d0040306ecc55fa668c95246f1f8425
+  subpackages:
+  - unix
+  - windows
+testImports: []

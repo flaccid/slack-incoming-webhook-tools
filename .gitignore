@@ -15,3 +15,7 @@
 
 bin/
 .env
+
+# we want to currently ignore the vendor folder as to
+# always install using go get ./...
+/vendor

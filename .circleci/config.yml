@@ -44,8 +44,8 @@ jobs:
             echo 'current release info:'
             github-release info -u flaccid -r slack-incoming-webhook-tools
 
-            echo 're-tagging v0.0.0-dev'
-            git tag --force v0.0.0-dev && git push --tags
+            # echo 're-tagging v0.0.0-dev'
+            # git tag --force v0.0.0-dev && git push --tags
 
             echo 'delete the devel release'
             github-release delete \

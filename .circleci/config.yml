@@ -7,7 +7,86 @@ jobs:
     working_directory: /go/src/github.com/flaccid/slack-incoming-webhook-tools
     steps:
       - checkout
-      - run: curl https://glide.sh/get | sh
-      - run: glide install
-      - run: go build -o bin/siwc cmd/siwc/siwc.go
-      - run: go build -o bin/siwp cmd/siwp/siwp.go
+      - run:
+          name: Install dependencies
+          command: curl https://glide.sh/get | sh && glide install
+      - run:
+          name: Build linux static binaries
+          command: |
+            go build -o bin/siwc-linux-amd64 cmd/siwc/siwc.go
+            go build -o bin/siwp-linux-amd64 cmd/siwp/siwp.go
+          environment:
+            CGO_ENABLED: 0
+            GOOS: linux
+            GOARCH: amd64
+      - run:
+          name: Build macos static binaries
+          command: |
+            go build -o bin/siwc-darwin-amd64 cmd/siwc/siwc.go
+            go build -o bin/siwp-darwin-amd64 cmd/siwp/siwp.go
+          environment:
+            CGO_ENABLED: 0
+            GOOS: darwin
+            GOARCH: amd64
+      - run:
+          name: Archive binaries
+          command: |
+            pushd bin >/dev/null
+              for f in *; do
+                [ -x "$f" ] && tar cvzf "$f.tar.gz" "$f"
+              done
+            popd >/dev/null
+      - run:
+          name: Release to GitHub
+          command: |
+            go get github.com/aktau/github-release
+
+            echo 'current release info:'
+            github-release info -u flaccid -r slack-incoming-webhook-tools
+
+            echo 're-tagging v0.0.0-dev'
+            git tag --force v0.0.0-dev && git push --tags
+
+            echo 'delete the devel release'
+            github-release delete \
+              --user flaccid \
+              --repo slack-incoming-webhook-tools \
+              --tag v0.0.0-dev
+
+            echo 'cutting new devel release'
+            github-release release \
+              --user flaccid \
+              --repo slack-incoming-webhook-tools \
+              --tag v0.0.0-dev \
+              --name devel \
+              --description 'This is a rolling release of current master.' \
+              --pre-release
+
+            echo 'uploading binaries to release'
+            github-release upload \
+              --user flaccid \
+              --repo slack-incoming-webhook-tools \
+              --tag v0.0.0-dev \
+              --name siwc-darwin-amd64.tar.gz \
+              --file bin/siwc-darwin-amd64.tar.gz
+            github-release upload \
+              --user flaccid \
+              --repo slack-incoming-webhook-tools \
+              --tag v0.0.0-dev \
+              --name siwc-linux-amd64.tar.gz \
+              --file bin/siwc-linux-amd64.tar.gz
+            github-release upload \
+              --user flaccid \
+              --repo slack-incoming-webhook-tools \
+              --tag v0.0.0-dev \
+              --name siwp-darwin-amd64.tar.gz \
+              --file bin/siwp-darwin-amd64.tar.gz
+            github-release upload \
+              --user flaccid \
+              --repo slack-incoming-webhook-tools \
+              --tag v0.0.0-dev \
+              --name siwp-linux-amd64.tar.gz \
+              --file bin/siwp-linux-amd64.tar.gz
+
+            echo 'new release info:'
+            github-release info -u flaccid -r slack-incoming-webhook-tools

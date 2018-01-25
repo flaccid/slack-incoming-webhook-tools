@@ -42,16 +42,18 @@ jobs:
             go get github.com/aktau/github-release
 
             echo 'current release info:'
-            github-release info -u flaccid -r slack-incoming-webhook-tools
+            github-release info -u flaccid -r slack-incoming-webhook-tools || true
 
             # echo 're-tagging v0.0.0-dev'
-            # git tag --force v0.0.0-dev && git push --tags
+            # git push --delete origin v0.0.0-dev || true
+            git tag --force v0.0.0-dev
+            # git push --tags
 
             echo 'delete the devel release'
             github-release delete \
               --user flaccid \
               --repo slack-incoming-webhook-tools \
-              --tag v0.0.0-dev
+              --tag v0.0.0-dev || true
 
             echo 'cutting new devel release'
             github-release release \

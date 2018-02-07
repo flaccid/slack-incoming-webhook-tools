@@ -1,10 +1,10 @@
 package proxy
 
 import (
+	"io"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"io"
 	"os"
 
 	log "github.com/sirupsen/logrus"
@@ -21,7 +21,7 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func logRequest(r *http.Request) {
 	// we only log in debug mode due to exposure of token in request uri
 	log.WithFields(log.Fields{
-	  "method": r.Method,
+		"method": r.Method,
 	}).Debug(r.URL.String())
 }
 

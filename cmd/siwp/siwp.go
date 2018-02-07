@@ -39,8 +39,8 @@ func main() {
 			EnvVar: "LISTEN_PORT",
 		},
 		cli.BoolFlag{
-			Name:   "debug,d",
-			Usage:  "run in debug mode",
+			Name:  "debug,d",
+			Usage: "run in debug mode",
 		},
 	}
 	app.Run(os.Args)

@@ -54,7 +54,7 @@ func start(c *cli.Context) error {
 		os.Exit(1)
 	}
 
-	proxy.Serve(c.String("webhook-url"), c.String("listen-port"))
+	proxy.Serve(c.String("webhook-url"), c.String("listen-port"), c.GlobalBool("debug"))
 
 	return nil
 }

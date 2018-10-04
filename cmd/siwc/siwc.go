@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	VERSION = "v0.0.0-dev"
+	VERSION = "v0.1.0-dev"
 )
 
 func beforeApp(c *cli.Context) error {
